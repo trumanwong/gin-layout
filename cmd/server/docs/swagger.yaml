@@ -1,0 +1,39 @@
+definitions:
+  v1.CreateGreeterReply:
+    properties:
+      greeter:
+        $ref: '#/definitions/v1.Greeter'
+    type: object
+  v1.CreateGreeterRequest:
+    properties:
+      name:
+        type: string
+    type: object
+  v1.Greeter:
+    properties:
+      name:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /greeter:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: 标签
+        in: body
+        name: json
+        required: true
+        schema:
+          $ref: '#/definitions/v1.CreateGreeterRequest'
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/v1.CreateGreeterReply'
+      summary: 创建Greeter
+      tags:
+      - Greeter
+swagger: "2.0"

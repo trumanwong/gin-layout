@@ -1,0 +1,22 @@
+server:
+  http:
+    port: 8000
+    mode: debug
+data:
+  database:
+    driver: mysql
+    source: user:password@tcp(host:port)/databse?charset=utf8mb4&parseTime=True&loc=Local
+  redis:
+    addr: host:port
+    password: password
+    prefix: 'prefix:'
+    db: 0
+    read_timeout: 200ms
+    write_timeout: 200ms
+rabbitmq:
+  url: amqp://user:password@host:5672
+other:
+  robot: https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=key
+  template_path: "/templates"
+  jwt_key: jwt_key
+  storage_path: "/storage"
