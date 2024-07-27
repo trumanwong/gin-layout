@@ -1,13 +1,13 @@
 # Gin Project Template
 
-## Install gin-layout-gen
+## Install gin-project-gen
 ```
-go install github.com/trumanwong/gin-layout-gen@latest
+go install github.com/trumanwong/gin-project-gen@latest
 ```
 ## Create a gin project
 ```
 # Create a template project
-gin-layout-gen new project_name
+gin-project-gen new project_name
 cd project_name
 # generate swagger
 /bin/bash ./swagger.sh
