@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /services
 
-COPY cmd/server/chat-roleplay-api-server /services/server
+COPY cmd/server/gin-layout-server /services/server
 COPY init.sh /services/init.sh
 COPY supervisor /etc/supervisor
 
