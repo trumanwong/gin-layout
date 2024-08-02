@@ -6,8 +6,8 @@ import (
 	"context"
 	"fmt"
 	"gin-layout/internal/data/ent"
-	"gin-layout/internal/data/ent/greeterexample"
 	"gin-layout/internal/data/ent/predicate"
+	"gin-layout/internal/data/ent/user"
 
 	"entgo.io/ent/dialect/sql"
 )
@@ -68,38 +68,38 @@ func (f TraverseFunc) Traverse(ctx context.Context, q ent.Query) error {
 	return f(ctx, query)
 }
 
-// The GreeterExampleFunc type is an adapter to allow the use of ordinary function as a Querier.
-type GreeterExampleFunc func(context.Context, *ent.GreeterExampleQuery) (ent.Value, error)
+// The UserFunc type is an adapter to allow the use of ordinary function as a Querier.
+type UserFunc func(context.Context, *ent.UserQuery) (ent.Value, error)
 
 // Query calls f(ctx, q).
-func (f GreeterExampleFunc) Query(ctx context.Context, q ent.Query) (ent.Value, error) {
-	if q, ok := q.(*ent.GreeterExampleQuery); ok {
+func (f UserFunc) Query(ctx context.Context, q ent.Query) (ent.Value, error) {
+	if q, ok := q.(*ent.UserQuery); ok {
 		return f(ctx, q)
 	}
-	return nil, fmt.Errorf("unexpected query type %T. expect *ent.GreeterExampleQuery", q)
+	return nil, fmt.Errorf("unexpected query type %T. expect *ent.UserQuery", q)
 }
 
-// The TraverseGreeterExample type is an adapter to allow the use of ordinary function as Traverser.
-type TraverseGreeterExample func(context.Context, *ent.GreeterExampleQuery) error
+// The TraverseUser type is an adapter to allow the use of ordinary function as Traverser.
+type TraverseUser func(context.Context, *ent.UserQuery) error
 
 // Intercept is a dummy implementation of Intercept that returns the next Querier in the pipeline.
-func (f TraverseGreeterExample) Intercept(next ent.Querier) ent.Querier {
+func (f TraverseUser) Intercept(next ent.Querier) ent.Querier {
 	return next
 }
 
 // Traverse calls f(ctx, q).
-func (f TraverseGreeterExample) Traverse(ctx context.Context, q ent.Query) error {
-	if q, ok := q.(*ent.GreeterExampleQuery); ok {
+func (f TraverseUser) Traverse(ctx context.Context, q ent.Query) error {
+	if q, ok := q.(*ent.UserQuery); ok {
 		return f(ctx, q)
 	}
-	return fmt.Errorf("unexpected query type %T. expect *ent.GreeterExampleQuery", q)
+	return fmt.Errorf("unexpected query type %T. expect *ent.UserQuery", q)
 }
 
 // NewQuery returns the generic Query interface for the given typed query.
 func NewQuery(q ent.Query) (Query, error) {
 	switch q := q.(type) {
-	case *ent.GreeterExampleQuery:
-		return &query[*ent.GreeterExampleQuery, predicate.GreeterExample, greeterexample.OrderOption]{typ: ent.TypeGreeterExample, tq: q}, nil
+	case *ent.UserQuery:
+		return &query[*ent.UserQuery, predicate.User, user.OrderOption]{typ: ent.TypeUser, tq: q}, nil
 	default:
 		return nil, fmt.Errorf("unknown query type %T", q)
 	}

@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+package api.app.v1;
+
+option go_package = "gin-layout/api/app/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.app.v1";
+
+import "validate/validate.proto";
+import "google/api/annotations.proto";
+
+service App {
+	// 创建用户
+	rpc CreateUser (CreateUserRequest) returns (CreateUserReply) {
+		option (google.api.http) = {
+			post: "/api/user",
+			body: "*"
+		};
+	};
+	// 更新用户
+	rpc UpdateUser (UpdateUserRequest) returns (UpdateUserReply) {
+		option (google.api.http) = {
+			put: "/api/user/:Id",
+			body: "*"
+		};
+	};
+	// 删除用户
+	rpc DeleteUser (DeleteUserRequest) returns (DeleteUserReply) {
+		option (google.api.http) = {
+			delete: "/api/user/:Id"
+		};
+	};
+	// 查找用户
+	rpc GetUser (GetUserRequest) returns (GetUserReply) {
+		option (google.api.http) = {
+			get: "/api/user/:Id"
+		};
+	};
+	// 用户列表
+	rpc ListUser (ListUserRequest) returns (ListUserReply) {
+		option (google.api.http) = {
+			get: "/api/user"
+		};
+	};
+	rpc Greeter (GreeterRequest) returns (GreeterReply) {
+		option (google.api.http) = {
+			get: "/api/greeter/:Name"
+		};
+	};
+}
+
+message CreateUserRequest {}
+message CreateUserReply {}
+
+message UpdateUserRequest {
+	uint64 Id = 1[(validate.rules).uint64 = {gt: 0}];
+}
+message UpdateUserReply {}
+
+message DeleteUserRequest {
+	uint64 Id = 1[(validate.rules).uint64 = {gt: 0}];
+}
+message DeleteUserReply {}
+
+message GetUserRequest {
+	uint64 Id = 1[(validate.rules).uint64 = {gt: 0}];
+}
+message GetUserReply {
+	string name = 1;
+}
+
+message ListUserRequest {}
+message ListUserReply {}
+
+message GreeterRequest {
+	// 姓名
+	string Name = 1;
+	// 年龄
+	uint64 age = 2[(validate.rules).uint64 = {gt: 0, lte: 100}];
+	// 消息
+	string message = 3[(validate.rules).string = {min_len: 1, max_len: 100}];
+}
+
+message GreeterReply {
+	string message = 1;
+}

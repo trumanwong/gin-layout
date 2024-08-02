@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package api.app.v1;
+
+option go_package = "gin-layout/api/app/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.app.v1";
+
+import "errors/errors.proto";
+
+enum AppServiceErrorReason {
+	option (errors.default_code) = 400;
+
+	UNKNOWN_ERROR = 0;
+	LOGIN_FAILED = 1 [(errors.code) = 401];
+	FORBIDDEN = 2 [(errors.code) = 403];
+	NotFound = 3 [(errors.code) = 404];
+	NotAcceptable = 4 [(errors.code) = 406];
+	Conflict= 5 [(errors.code) = 409];
+	Internal = 6 [(errors.code) = 500];
+}

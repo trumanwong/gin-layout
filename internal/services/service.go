@@ -1,17 +1,13 @@
 package services
 
 import (
-	"encoding/base64"
-	"encoding/json"
 	"fmt"
-	errorV1 "gin-layout/api/error/v1"
+	v1 "gin-layout/api/app/v1"
 	"gin-layout/internal/conf"
 	"gin-layout/internal/data"
 	"github.com/bwmarrin/snowflake"
-	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
-	"github.com/trumanwong/cryptogo"
-	"github.com/trumanwong/cryptogo/paddings"
+	"github.com/trumanwong/gin-transport/transport/errors"
 	"github.com/trumanwong/go-tools/cache"
 	"github.com/trumanwong/go-tools/log"
 	"github.com/trumanwong/go-tools/robot"
@@ -19,6 +15,7 @@ import (
 )
 
 type AppService struct {
+	v1.UnimplementedAppServer
 	greeterRepo *data.GreeterRepo
 
 	//rabbitMQ       *mq.RabbitMQ
@@ -61,9 +58,10 @@ func NewAppService(
 	}
 }
 
-func (s AppService) handleError(ctx *gin.Context, err error, statusCode int) {
+func (s AppService) handleError(err error) {
 	if err != nil {
-		if statusCode == http.StatusInternalServerError {
+		se := errors.FromError(err)
+		if se.Code == http.StatusInternalServerError {
 			s.wechatRobot.SendText(&robot.SentTextRequest{
 				Level:   robot.LevelError,
 				Content: err.Error(),
@@ -71,24 +69,7 @@ func (s AppService) handleError(ctx *gin.Context, err error, statusCode int) {
 			})
 		}
 		s.logger.Errorf(err.Error())
-		s.Response(ctx, statusCode, errorV1.Error{
-			Message: err.Error(),
-		})
 	}
-}
-
-func (s AppService) Response(ctx *gin.Context, code int, data interface{}) {
-	if !s.config.Crypto.Enable || ctx.GetHeader(s.config.Crypto.PlainHeaderKey) == s.config.Crypto.PlainHeaderVal {
-		ctx.JSON(code, gin.H{
-			"data": data,
-		})
-		return
-	}
-	plaintext, _ := json.Marshal(data)
-	cipher, _ := cryptogo.AesCBCEncrypt(plaintext, []byte(s.config.Crypto.AesKey), []byte(s.config.Crypto.AesIv), paddings.PKCS7)
-	ctx.JSON(code, gin.H{
-		"data": base64.StdEncoding.EncodeToString(cipher),
-	})
 }
 
 // ProviderSet is service providers.

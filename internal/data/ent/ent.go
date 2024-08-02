@@ -6,7 +6,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"gin-layout/internal/data/ent/greeterexample"
+	"gin-layout/internal/data/ent/user"
 	"reflect"
 	"sync"
 
@@ -73,7 +73,7 @@ var (
 func checkColumn(table, column string) error {
 	initCheck.Do(func() {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
-			greeterexample.Table: greeterexample.ValidColumn,
+			user.Table: user.ValidColumn,
 		})
 	})
 	return columnCheck(table, column)

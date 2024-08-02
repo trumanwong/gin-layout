@@ -2,36 +2,7 @@
 
 package runtime
 
-import (
-	"gin-layout/internal/data/ent/greeterexample"
-	"gin-layout/internal/data/ent/schema"
-	"time"
-)
-
-// The init function reads all schema descriptors with runtime code
-// (default values, validators, hooks and policies) and stitches it
-// to their package variables.
-func init() {
-	greeterexampleMixin := schema.GreeterExample{}.Mixin()
-	greeterexampleMixinHooks1 := greeterexampleMixin[1].Hooks()
-	greeterexample.Hooks[0] = greeterexampleMixinHooks1[0]
-	greeterexampleMixinInters1 := greeterexampleMixin[1].Interceptors()
-	greeterexample.Interceptors[0] = greeterexampleMixinInters1[0]
-	greeterexampleMixinFields0 := greeterexampleMixin[0].Fields()
-	_ = greeterexampleMixinFields0
-	greeterexampleFields := schema.GreeterExample{}.Fields()
-	_ = greeterexampleFields
-	// greeterexampleDescCreatedAt is the schema descriptor for created_at field.
-	greeterexampleDescCreatedAt := greeterexampleMixinFields0[0].Descriptor()
-	// greeterexample.DefaultCreatedAt holds the default value on creation for the created_at field.
-	greeterexample.DefaultCreatedAt = greeterexampleDescCreatedAt.Default.(func() time.Time)
-	// greeterexampleDescUpdatedAt is the schema descriptor for updated_at field.
-	greeterexampleDescUpdatedAt := greeterexampleMixinFields0[1].Descriptor()
-	// greeterexample.DefaultUpdatedAt holds the default value on creation for the updated_at field.
-	greeterexample.DefaultUpdatedAt = greeterexampleDescUpdatedAt.Default.(func() time.Time)
-	// greeterexample.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
-	greeterexample.UpdateDefaultUpdatedAt = greeterexampleDescUpdatedAt.UpdateDefault.(func() time.Time)
-}
+// The schema-stitching logic is generated in gin-layout/internal/data/ent/runtime.go
 
 const (
 	Version = "v0.13.1"                                         // Version of ent codegen.

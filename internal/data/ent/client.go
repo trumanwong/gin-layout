@@ -11,7 +11,7 @@ import (
 
 	"gin-layout/internal/data/ent/migrate"
 
-	"gin-layout/internal/data/ent/greeterexample"
+	"gin-layout/internal/data/ent/user"
 
 	"entgo.io/ent"
 	"entgo.io/ent/dialect"
@@ -25,8 +25,8 @@ type Client struct {
 	config
 	// Schema is the client for creating, migrating and dropping schema.
 	Schema *migrate.Schema
-	// GreeterExample is the client for interacting with the GreeterExample builders.
-	GreeterExample *GreeterExampleClient
+	// User is the client for interacting with the User builders.
+	User *UserClient
 }
 
 // NewClient creates a new client configured with the given options.
@@ -38,7 +38,7 @@ func NewClient(opts ...Option) *Client {
 
 func (c *Client) init() {
 	c.Schema = migrate.NewSchema(c.driver)
-	c.GreeterExample = NewGreeterExampleClient(c.config)
+	c.User = NewUserClient(c.config)
 }
 
 type (
@@ -129,9 +129,9 @@ func (c *Client) Tx(ctx context.Context) (*Tx, error) {
 	cfg := c.config
 	cfg.driver = tx
 	return &Tx{
-		ctx:            ctx,
-		config:         cfg,
-		GreeterExample: NewGreeterExampleClient(cfg),
+		ctx:    ctx,
+		config: cfg,
+		User:   NewUserClient(cfg),
 	}, nil
 }
 
@@ -149,16 +149,16 @@ func (c *Client) BeginTx(ctx context.Context, opts *sql.TxOptions) (*Tx, error) 
 	cfg := c.config
 	cfg.driver = &txDriver{tx: tx, drv: c.driver}
 	return &Tx{
-		ctx:            ctx,
-		config:         cfg,
-		GreeterExample: NewGreeterExampleClient(cfg),
+		ctx:    ctx,
+		config: cfg,
+		User:   NewUserClient(cfg),
 	}, nil
 }
 
 // Debug returns a new debug-client. It's used to get verbose logging on specific operations.
 //
 //	client.Debug().
-//		GreeterExample.
+//		User.
 //		Query().
 //		Count(ctx)
 func (c *Client) Debug() *Client {
@@ -180,126 +180,126 @@ func (c *Client) Close() error {
 // Use adds the mutation hooks to all the entity clients.
 // In order to add hooks to a specific client, call: `client.Node.Use(...)`.
 func (c *Client) Use(hooks ...Hook) {
-	c.GreeterExample.Use(hooks...)
+	c.User.Use(hooks...)
 }
 
 // Intercept adds the query interceptors to all the entity clients.
 // In order to add interceptors to a specific client, call: `client.Node.Intercept(...)`.
 func (c *Client) Intercept(interceptors ...Interceptor) {
-	c.GreeterExample.Intercept(interceptors...)
+	c.User.Intercept(interceptors...)
 }
 
 // Mutate implements the ent.Mutator interface.
 func (c *Client) Mutate(ctx context.Context, m Mutation) (Value, error) {
 	switch m := m.(type) {
-	case *GreeterExampleMutation:
-		return c.GreeterExample.mutate(ctx, m)
+	case *UserMutation:
+		return c.User.mutate(ctx, m)
 	default:
 		return nil, fmt.Errorf("ent: unknown mutation type %T", m)
 	}
 }
 
-// GreeterExampleClient is a client for the GreeterExample schema.
-type GreeterExampleClient struct {
+// UserClient is a client for the User schema.
+type UserClient struct {
 	config
 }
 
-// NewGreeterExampleClient returns a client for the GreeterExample from the given config.
-func NewGreeterExampleClient(c config) *GreeterExampleClient {
-	return &GreeterExampleClient{config: c}
+// NewUserClient returns a client for the User from the given config.
+func NewUserClient(c config) *UserClient {
+	return &UserClient{config: c}
 }
 
 // Use adds a list of mutation hooks to the hooks stack.
-// A call to `Use(f, g, h)` equals to `greeterexample.Hooks(f(g(h())))`.
-func (c *GreeterExampleClient) Use(hooks ...Hook) {
-	c.hooks.GreeterExample = append(c.hooks.GreeterExample, hooks...)
+// A call to `Use(f, g, h)` equals to `user.Hooks(f(g(h())))`.
+func (c *UserClient) Use(hooks ...Hook) {
+	c.hooks.User = append(c.hooks.User, hooks...)
 }
 
 // Intercept adds a list of query interceptors to the interceptors stack.
-// A call to `Intercept(f, g, h)` equals to `greeterexample.Intercept(f(g(h())))`.
-func (c *GreeterExampleClient) Intercept(interceptors ...Interceptor) {
-	c.inters.GreeterExample = append(c.inters.GreeterExample, interceptors...)
+// A call to `Intercept(f, g, h)` equals to `user.Intercept(f(g(h())))`.
+func (c *UserClient) Intercept(interceptors ...Interceptor) {
+	c.inters.User = append(c.inters.User, interceptors...)
 }
 
-// Create returns a builder for creating a GreeterExample entity.
-func (c *GreeterExampleClient) Create() *GreeterExampleCreate {
-	mutation := newGreeterExampleMutation(c.config, OpCreate)
-	return &GreeterExampleCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Create returns a builder for creating a User entity.
+func (c *UserClient) Create() *UserCreate {
+	mutation := newUserMutation(c.config, OpCreate)
+	return &UserCreate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// CreateBulk returns a builder for creating a bulk of GreeterExample entities.
-func (c *GreeterExampleClient) CreateBulk(builders ...*GreeterExampleCreate) *GreeterExampleCreateBulk {
-	return &GreeterExampleCreateBulk{config: c.config, builders: builders}
+// CreateBulk returns a builder for creating a bulk of User entities.
+func (c *UserClient) CreateBulk(builders ...*UserCreate) *UserCreateBulk {
+	return &UserCreateBulk{config: c.config, builders: builders}
 }
 
 // MapCreateBulk creates a bulk creation builder from the given slice. For each item in the slice, the function creates
 // a builder and applies setFunc on it.
-func (c *GreeterExampleClient) MapCreateBulk(slice any, setFunc func(*GreeterExampleCreate, int)) *GreeterExampleCreateBulk {
+func (c *UserClient) MapCreateBulk(slice any, setFunc func(*UserCreate, int)) *UserCreateBulk {
 	rv := reflect.ValueOf(slice)
 	if rv.Kind() != reflect.Slice {
-		return &GreeterExampleCreateBulk{err: fmt.Errorf("calling to GreeterExampleClient.MapCreateBulk with wrong type %T, need slice", slice)}
+		return &UserCreateBulk{err: fmt.Errorf("calling to UserClient.MapCreateBulk with wrong type %T, need slice", slice)}
 	}
-	builders := make([]*GreeterExampleCreate, rv.Len())
+	builders := make([]*UserCreate, rv.Len())
 	for i := 0; i < rv.Len(); i++ {
 		builders[i] = c.Create()
 		setFunc(builders[i], i)
 	}
-	return &GreeterExampleCreateBulk{config: c.config, builders: builders}
+	return &UserCreateBulk{config: c.config, builders: builders}
 }
 
-// Update returns an update builder for GreeterExample.
-func (c *GreeterExampleClient) Update() *GreeterExampleUpdate {
-	mutation := newGreeterExampleMutation(c.config, OpUpdate)
-	return &GreeterExampleUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Update returns an update builder for User.
+func (c *UserClient) Update() *UserUpdate {
+	mutation := newUserMutation(c.config, OpUpdate)
+	return &UserUpdate{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOne returns an update builder for the given entity.
-func (c *GreeterExampleClient) UpdateOne(ge *GreeterExample) *GreeterExampleUpdateOne {
-	mutation := newGreeterExampleMutation(c.config, OpUpdateOne, withGreeterExample(ge))
-	return &GreeterExampleUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *UserClient) UpdateOne(u *User) *UserUpdateOne {
+	mutation := newUserMutation(c.config, OpUpdateOne, withUser(u))
+	return &UserUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // UpdateOneID returns an update builder for the given id.
-func (c *GreeterExampleClient) UpdateOneID(id int) *GreeterExampleUpdateOne {
-	mutation := newGreeterExampleMutation(c.config, OpUpdateOne, withGreeterExampleID(id))
-	return &GreeterExampleUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
+func (c *UserClient) UpdateOneID(id int) *UserUpdateOne {
+	mutation := newUserMutation(c.config, OpUpdateOne, withUserID(id))
+	return &UserUpdateOne{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
-// Delete returns a delete builder for GreeterExample.
-func (c *GreeterExampleClient) Delete() *GreeterExampleDelete {
-	mutation := newGreeterExampleMutation(c.config, OpDelete)
-	return &GreeterExampleDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
+// Delete returns a delete builder for User.
+func (c *UserClient) Delete() *UserDelete {
+	mutation := newUserMutation(c.config, OpDelete)
+	return &UserDelete{config: c.config, hooks: c.Hooks(), mutation: mutation}
 }
 
 // DeleteOne returns a builder for deleting the given entity.
-func (c *GreeterExampleClient) DeleteOne(ge *GreeterExample) *GreeterExampleDeleteOne {
-	return c.DeleteOneID(ge.ID)
+func (c *UserClient) DeleteOne(u *User) *UserDeleteOne {
+	return c.DeleteOneID(u.ID)
 }
 
 // DeleteOneID returns a builder for deleting the given entity by its id.
-func (c *GreeterExampleClient) DeleteOneID(id int) *GreeterExampleDeleteOne {
-	builder := c.Delete().Where(greeterexample.ID(id))
+func (c *UserClient) DeleteOneID(id int) *UserDeleteOne {
+	builder := c.Delete().Where(user.ID(id))
 	builder.mutation.id = &id
 	builder.mutation.op = OpDeleteOne
-	return &GreeterExampleDeleteOne{builder}
+	return &UserDeleteOne{builder}
 }
 
-// Query returns a query builder for GreeterExample.
-func (c *GreeterExampleClient) Query() *GreeterExampleQuery {
-	return &GreeterExampleQuery{
+// Query returns a query builder for User.
+func (c *UserClient) Query() *UserQuery {
+	return &UserQuery{
 		config: c.config,
-		ctx:    &QueryContext{Type: TypeGreeterExample},
+		ctx:    &QueryContext{Type: TypeUser},
 		inters: c.Interceptors(),
 	}
 }
 
-// Get returns a GreeterExample entity by its id.
-func (c *GreeterExampleClient) Get(ctx context.Context, id int) (*GreeterExample, error) {
-	return c.Query().Where(greeterexample.ID(id)).Only(ctx)
+// Get returns a User entity by its id.
+func (c *UserClient) Get(ctx context.Context, id int) (*User, error) {
+	return c.Query().Where(user.ID(id)).Only(ctx)
 }
 
 // GetX is like Get, but panics if an error occurs.
-func (c *GreeterExampleClient) GetX(ctx context.Context, id int) *GreeterExample {
+func (c *UserClient) GetX(ctx context.Context, id int) *User {
 	obj, err := c.Get(ctx, id)
 	if err != nil {
 		panic(err)
@@ -308,39 +308,37 @@ func (c *GreeterExampleClient) GetX(ctx context.Context, id int) *GreeterExample
 }
 
 // Hooks returns the client hooks.
-func (c *GreeterExampleClient) Hooks() []Hook {
-	hooks := c.hooks.GreeterExample
-	return append(hooks[:len(hooks):len(hooks)], greeterexample.Hooks[:]...)
+func (c *UserClient) Hooks() []Hook {
+	return c.hooks.User
 }
 
 // Interceptors returns the client interceptors.
-func (c *GreeterExampleClient) Interceptors() []Interceptor {
-	inters := c.inters.GreeterExample
-	return append(inters[:len(inters):len(inters)], greeterexample.Interceptors[:]...)
+func (c *UserClient) Interceptors() []Interceptor {
+	return c.inters.User
 }
 
-func (c *GreeterExampleClient) mutate(ctx context.Context, m *GreeterExampleMutation) (Value, error) {
+func (c *UserClient) mutate(ctx context.Context, m *UserMutation) (Value, error) {
 	switch m.Op() {
 	case OpCreate:
-		return (&GreeterExampleCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+		return (&UserCreate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
 	case OpUpdate:
-		return (&GreeterExampleUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+		return (&UserUpdate{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
 	case OpUpdateOne:
-		return (&GreeterExampleUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
+		return (&UserUpdateOne{config: c.config, hooks: c.Hooks(), mutation: m}).Save(ctx)
 	case OpDelete, OpDeleteOne:
-		return (&GreeterExampleDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
+		return (&UserDelete{config: c.config, hooks: c.Hooks(), mutation: m}).Exec(ctx)
 	default:
-		return nil, fmt.Errorf("ent: unknown GreeterExample mutation op: %q", m.Op())
+		return nil, fmt.Errorf("ent: unknown User mutation op: %q", m.Op())
 	}
 }
 
 // hooks and interceptors per client, for fast access.
 type (
 	hooks struct {
-		GreeterExample []ent.Hook
+		User []ent.Hook
 	}
 	inters struct {
-		GreeterExample []ent.Interceptor
+		User []ent.Interceptor
 	}
 )
 

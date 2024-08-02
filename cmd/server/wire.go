@@ -12,9 +12,10 @@ import (
 	"gin-layout/internal/robot"
 	"gin-layout/internal/services"
 	"github.com/google/wire"
+	"github.com/trumanwong/gin-transport/transport"
 )
 
-func wireApp() *AppService {
+func wireApp() *transport.Server {
 	panic(wire.Build(
 		cache.ProviderSet,
 		conf.ProviderSet,
@@ -23,6 +24,6 @@ func wireApp() *AppService {
 		data.ProviderSet,
 		middlewares.ProviderSet,
 		services.ProviderSet,
-		newApp,
+		NewHttpServer,
 	))
 }

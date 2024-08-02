@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-package error.v1;
-
-option go_package = "api/error/v1;v1";
-
-message Error {
-  string message = 1;
-}

@@ -2,7 +2,7 @@ package data
 
 import (
 	"context"
-	v1 "gin-layout/api/helloworld/v1"
+	v1 "gin-layout/api/app/v1"
 	"github.com/trumanwong/go-tools/log"
 )
 
@@ -18,7 +18,7 @@ func NewGreeterRepo(data *Data, logger *log.Logger) *GreeterRepo {
 	}
 }
 
-func (r *GreeterRepo) Create(ctx context.Context, req *v1.CreateGreeterRequest) (*v1.CreateGreeterReply, error) {
-	// todo create greeter
-	return &v1.CreateGreeterReply{}, nil
+func (r *GreeterRepo) Create(ctx context.Context, req *v1.CreateUserRequest) (*v1.CreateUserReply, error) {
+	// todo create user
+	return &v1.CreateUserReply{}, nil
 }

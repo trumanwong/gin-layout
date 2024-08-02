@@ -27,7 +27,7 @@ func (m *Middleware) AuthCheck() gin.HandlerFunc {
 			// hmacSampleSecret is a []byte containing your secret, e.g. []byte("my_secret_key")
 			return []byte(m.config.Other.JwtKey), nil
 		})
-		if err != nil && err.Error() != "Token is expired" {
+		if err != nil {
 			ctx.JSON(http.StatusForbidden, map[string]interface{}{
 				"message": err.Error(),
 			})

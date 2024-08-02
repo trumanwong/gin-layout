@@ -14,20 +14,21 @@ import (
 	"gin-layout/internal/middlewares"
 	"gin-layout/internal/robot"
 	"gin-layout/internal/services"
+	"github.com/trumanwong/gin-transport/transport"
 )
 
 // Injectors from wire.go:
 
-func wireApp() *AppService {
+func wireApp() *transport.Server {
 	configs := conf.NewConfig()
+	logger := log.NewLogger()
+	workWechatRobot := robot.NewRobotWechat(configs)
+	middleware := middlewares.NewMiddleware(configs, logger, workWechatRobot)
 	client := data.NewEntClient(configs)
 	dataData := data.NewData(client)
-	logger := log.NewLogger()
 	greeterRepo := data.NewGreeterRepo(dataData, logger)
 	cacheCache := cache.NewCache(configs)
-	workWechatRobot := robot.NewRobotWechat(configs)
 	appService := services.NewAppService(greeterRepo, cacheCache, configs, logger, workWechatRobot)
-	middleware := middlewares.NewMiddleware(configs, logger, workWechatRobot)
-	mainAppService := newApp(appService, configs, logger, middleware)
-	return mainAppService
+	server := NewHttpServer(configs, logger, middleware, appService)
+	return server
 }
