@@ -29,7 +29,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](https://gi
 
 ## Acknowledgements
 
-The following project had particular influence on protoc-gen-go-gin's design.
+The following project had particular influence on gin-layout's design.
 
 - [go-kratos/kratos](https://github.com/go-kratos/kratos) is a microservice-oriented governance framework implemented by golang.
 - [gin-gonic/gin](https://github.com/gin-gonic/gin) is a web framework written in Go.
