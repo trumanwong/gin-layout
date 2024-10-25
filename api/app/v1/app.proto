@@ -66,7 +66,7 @@ message GetUserRequest {
 	uint64 Id = 1[(validate.rules).uint64 = {gt: 0}];
 }
 message GetUserReply {
-	string name = 1;
+	string Name = 1;
 }
 
 message ListUserRequest {}
@@ -76,11 +76,11 @@ message GreeterRequest {
 	// 姓名
 	string Name = 1;
 	// 年龄
-	uint64 age = 2[(validate.rules).uint64 = {gt: 0, lte: 100}];
+	uint64 Age = 2[(validate.rules).uint64 = {gt: 0, lte: 100}];
 	// 消息
-	string message = 3[(validate.rules).string = {min_len: 1, max_len: 100}];
+	string Message = 3[(validate.rules).string = {min_len: 1, max_len: 100}];
 }
 
 message GreeterReply {
-	string message = 1;
+	string Message = 1;
 }
