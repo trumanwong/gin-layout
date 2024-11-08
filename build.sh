@@ -1,7 +1,8 @@
 #!/bin/bash
 
-protoc --proto_path=api/helloworld/v1  --proto_path=third_party --go_out=. --validate_out="lang=go:." api/helloworld/v1/greeter.proto
-protoc --proto_path=api/error/v1 --go_out=. --validate_out="lang=go:." api/error/v1/error.proto
+go install github.com/trumanwong/gin-project-gen@latest
+gin-project-gen proto client api/app/v1/app.proto
+gin-project-gen proto client api/app/v1/app_error.proto
 go run -mod=mod entgo.io/ent/cmd/ent generate --feature sql/modifier,sql/execquery,intercept ./internal/data/ent/schema
 go install github.com/google/wire/cmd/wire@latest
 

@@ -44,16 +44,22 @@ type AppHTTPServer interface {
 }
 
 func RegisterAppHTTPServer(s *transport.Server, srv AppHTTPServer) {
-	s.AddMethod("POST", "/api/user", OperationAppCreateUser, _App_CreateUser0_HTTP_Handler(s, srv))
-	s.AddMethod("PUT", "/api/user/:Id", OperationAppUpdateUser, _App_UpdateUser0_HTTP_Handler(s, srv))
-	s.AddMethod("DELETE", "/api/user/:Id", OperationAppDeleteUser, _App_DeleteUser0_HTTP_Handler(s, srv))
-	s.AddMethod("GET", "/api/user/:Id", OperationAppGetUser, _App_GetUser0_HTTP_Handler(s, srv))
-	s.AddMethod("GET", "/api/user", OperationAppListUser, _App_ListUser0_HTTP_Handler(s, srv))
-	s.AddMethod("GET", "/api/greeter/:Name", OperationAppGreeter, _App_Greeter0_HTTP_Handler(s, srv))
+	s.AddMethod("POST", "/api/user", _App_CreateUser0_HTTP_Handler(s, srv, OperationAppCreateUser))
+	s.AddMethod("PUT", "/api/user/:Id", _App_UpdateUser0_HTTP_Handler(s, srv, OperationAppUpdateUser))
+	s.AddMethod("DELETE", "/api/user/:Id", _App_DeleteUser0_HTTP_Handler(s, srv, OperationAppDeleteUser))
+	s.AddMethod("GET", "/api/user/:Id", _App_GetUser0_HTTP_Handler(s, srv, OperationAppGetUser))
+	s.AddMethod("GET", "/api/user", _App_ListUser0_HTTP_Handler(s, srv, OperationAppListUser))
+	s.AddMethod("GET", "/api/greeter/:Name", _App_Greeter0_HTTP_Handler(s, srv, OperationAppGreeter))
 }
 
-func _App_CreateUser0_HTTP_Handler(s *transport.Server, srv AppHTTPServer) func(ctx *gin.Context) {
+func _App_CreateUser0_HTTP_Handler(s *transport.Server, srv AppHTTPServer, operation string) func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
+		for _, f := range s.GetMiddlewares() {
+			if err := f(ctx, operation); err != nil {
+				s.ResultError(ctx, err)
+				return
+			}
+		}
 		var req CreateUserRequest
 		if err := ctx.ShouldBindJSON(&req); err != nil {
 			s.ResultError(ctx, err)
@@ -78,8 +84,14 @@ func _App_CreateUser0_HTTP_Handler(s *transport.Server, srv AppHTTPServer) func(
 	}
 }
 
-func _App_UpdateUser0_HTTP_Handler(s *transport.Server, srv AppHTTPServer) func(ctx *gin.Context) {
+func _App_UpdateUser0_HTTP_Handler(s *transport.Server, srv AppHTTPServer, operation string) func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
+		for _, f := range s.GetMiddlewares() {
+			if err := f(ctx, operation); err != nil {
+				s.ResultError(ctx, err)
+				return
+			}
+		}
 		var req UpdateUserRequest
 		if err := ctx.ShouldBindJSON(&req); err != nil {
 			s.ResultError(ctx, err)
@@ -108,8 +120,14 @@ func _App_UpdateUser0_HTTP_Handler(s *transport.Server, srv AppHTTPServer) func(
 	}
 }
 
-func _App_DeleteUser0_HTTP_Handler(s *transport.Server, srv AppHTTPServer) func(ctx *gin.Context) {
+func _App_DeleteUser0_HTTP_Handler(s *transport.Server, srv AppHTTPServer, operation string) func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
+		for _, f := range s.GetMiddlewares() {
+			if err := f(ctx, operation); err != nil {
+				s.ResultError(ctx, err)
+				return
+			}
+		}
 		var req DeleteUserRequest
 		if err := ctx.ShouldBindQuery(&req); err != nil {
 			s.ResultError(ctx, err)
@@ -134,8 +152,14 @@ func _App_DeleteUser0_HTTP_Handler(s *transport.Server, srv AppHTTPServer) func(
 	}
 }
 
-func _App_GetUser0_HTTP_Handler(s *transport.Server, srv AppHTTPServer) func(ctx *gin.Context) {
+func _App_GetUser0_HTTP_Handler(s *transport.Server, srv AppHTTPServer, operation string) func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
+		for _, f := range s.GetMiddlewares() {
+			if err := f(ctx, operation); err != nil {
+				s.ResultError(ctx, err)
+				return
+			}
+		}
 		var req GetUserRequest
 		if err := ctx.ShouldBindQuery(&req); err != nil {
 			s.ResultError(ctx, err)
@@ -160,8 +184,14 @@ func _App_GetUser0_HTTP_Handler(s *transport.Server, srv AppHTTPServer) func(ctx
 	}
 }
 
-func _App_ListUser0_HTTP_Handler(s *transport.Server, srv AppHTTPServer) func(ctx *gin.Context) {
+func _App_ListUser0_HTTP_Handler(s *transport.Server, srv AppHTTPServer, operation string) func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
+		for _, f := range s.GetMiddlewares() {
+			if err := f(ctx, operation); err != nil {
+				s.ResultError(ctx, err)
+				return
+			}
+		}
 		var req ListUserRequest
 		if err := ctx.ShouldBindQuery(&req); err != nil {
 			s.ResultError(ctx, err)
@@ -182,8 +212,14 @@ func _App_ListUser0_HTTP_Handler(s *transport.Server, srv AppHTTPServer) func(ct
 	}
 }
 
-func _App_Greeter0_HTTP_Handler(s *transport.Server, srv AppHTTPServer) func(ctx *gin.Context) {
+func _App_Greeter0_HTTP_Handler(s *transport.Server, srv AppHTTPServer, operation string) func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
+		for _, f := range s.GetMiddlewares() {
+			if err := f(ctx, operation); err != nil {
+				s.ResultError(ctx, err)
+				return
+			}
+		}
 		var req GreeterRequest
 		if err := ctx.ShouldBindQuery(&req); err != nil {
 			s.ResultError(ctx, err)
