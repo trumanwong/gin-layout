@@ -23,6 +23,18 @@ func ErrorUnknownError(format string, args ...interface{}) *errors.Error {
 	return errors.New(400, AppServiceErrorReason_UNKNOWN_ERROR.String(), fmt.Sprintf(format, args...))
 }
 
+func IsBadRequest(err error) bool {
+	if err == nil {
+		return false
+	}
+	e := errors.FromError(err)
+	return e.Reason == AppServiceErrorReason_BAD_REQUEST.String() && e.Code == 400
+}
+
+func ErrorBadRequest(format string, args ...interface{}) *errors.Error {
+	return errors.New(400, AppServiceErrorReason_BAD_REQUEST.String(), fmt.Sprintf(format, args...))
+}
+
 func IsLoginFailed(err error) bool {
 	if err == nil {
 		return false

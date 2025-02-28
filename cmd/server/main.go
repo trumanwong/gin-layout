@@ -30,18 +30,10 @@ func NewHttpServer(
 	engine.Use(gin.Recovery())
 	engine.Use(trace.Handle())
 	engine.Use(allowCors.Handle())
-	server := transport.NewServer(engine, []*transport.GroupMiddleware{
-		{
-			Middleware: middleware.AuthCheck(),
-			Operations: []string{
-				v1.OperationAppCreateUser,
-				v1.OperationAppDeleteUser,
-				v1.OperationAppGetUser,
-				v1.OperationAppListUser,
-			},
-		},
-	}, []string{
+	server := transport.NewServer(engine, []string{
 		fmt.Sprintf(":%d", config.Server.Http.Port),
+	}, []transport.Middleware{
+		middleware.AuthCheck,
 	})
 
 	v1.RegisterAppHTTPServer(server, srv)

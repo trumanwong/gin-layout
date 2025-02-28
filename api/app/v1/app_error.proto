@@ -12,10 +12,11 @@ enum AppServiceErrorReason {
 	option (errors.default_code) = 400;
 
 	UNKNOWN_ERROR = 0;
-	LOGIN_FAILED = 1 [(errors.code) = 401];
-	FORBIDDEN = 2 [(errors.code) = 403];
-	NotFound = 3 [(errors.code) = 404];
-	NotAcceptable = 4 [(errors.code) = 406];
-	Conflict= 5 [(errors.code) = 409];
-	Internal = 6 [(errors.code) = 500];
+	BAD_REQUEST = 1 [(errors.code) = 400];
+	LOGIN_FAILED = 2 [(errors.code) = 401];
+	FORBIDDEN = 3 [(errors.code) = 403];
+	NotFound = 4 [(errors.code) = 404];
+	NotAcceptable = 5 [(errors.code) = 406];
+	Conflict= 6 [(errors.code) = 409];
+	Internal = 7 [(errors.code) = 500];
 }
