@@ -9,8 +9,8 @@ package v1
 import (
 	context "context"
 	gin "github.com/gin-gonic/gin"
-	transport "github.com/trumanwong/gin-transport/transport"
-	errors "github.com/trumanwong/gin-transport/transport/errors"
+	transport "github.com/trumanwong/gin-transport/v2/transport"
+	errors "github.com/trumanwong/gin-transport/v2/transport/errors"
 	reflect "reflect"
 )
 

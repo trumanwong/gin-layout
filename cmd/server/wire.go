@@ -12,7 +12,7 @@ import (
 	"gin-layout/internal/robot"
 	"gin-layout/internal/services"
 	"github.com/google/wire"
-	"github.com/trumanwong/gin-transport/transport"
+	"github.com/trumanwong/gin-transport/v2/transport"
 )
 
 func wireApp() *transport.Server {

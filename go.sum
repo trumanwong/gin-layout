@@ -156,8 +156,8 @@ github.com/subosito/gotenv v1.6.0 h1:9NlTDc1FTs4qu0DDq7AEtTPNw6SVm7uBMsUCUjABIf8
 github.com/subosito/gotenv v1.6.0/go.mod h1:Dk4QP5c2W3ibzajGcXpNraDfq2IrhjMIvMSWPKKo0FU=
 github.com/trumanwong/cryptogo v1.0.5 h1:vqWdvk1/XYmvxFF1tS7yykOwJ/+8/2RLNOqfWp1Ye40=
 github.com/trumanwong/cryptogo v1.0.5/go.mod h1:CnumqMkKWU8Y4fZKnlH1q9whbZRsYxkFDR01XA/L998=
-github.com/trumanwong/gin-transport v1.0.1 h1:gmxU800R8V3usXPq51c6aArOMp2NawIWQUUGCoLpniM=
-github.com/trumanwong/gin-transport v1.0.1/go.mod h1:rkmF+4yZDl2i9/cYwTPaMxonenvId5mfT8aARTAZGBM=
+github.com/trumanwong/gin-transport/v2 v2.0.1 h1:IB1H6PLiU1eHqVgkmsCU7HgKThClu1TGiCYgFaCz3kE=
+github.com/trumanwong/gin-transport/v2 v2.0.1/go.mod h1:ND8U5mz8VpxmYtLiQ8lVaVfg79MplAQYC19OFBj5SYY=
 github.com/trumanwong/go-tools v0.0.33 h1:r4uyEwUYjNSNZS6VsgF7pSi9jLiMLcPEOpsOMT3p4IA=
 github.com/trumanwong/go-tools v0.0.33/go.mod h1:1D5BYLbn3X9aGtSVp1oJ8WJwX9fbkcBoLQp5hKJG7uE=
 github.com/twitchyliquid64/golang-asm v0.15.1 h1:SU5vSMR7hnwNxj24w34ZyCi/FmDZTkS4MhqMhdFk5YI=

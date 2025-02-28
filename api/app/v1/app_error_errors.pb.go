@@ -4,7 +4,7 @@ package v1
 
 import (
 	fmt "fmt"
-	errors "github.com/trumanwong/gin-transport/transport/errors"
+	errors "github.com/trumanwong/gin-transport/v2/transport/errors"
 )
 
 // This is a compile-time assertion to ensure that this generated file

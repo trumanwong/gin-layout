@@ -14,7 +14,7 @@ import (
 	"gin-layout/internal/middlewares"
 	"gin-layout/internal/robot"
 	"gin-layout/internal/services"
-	"github.com/trumanwong/gin-transport/transport"
+	"github.com/trumanwong/gin-transport/v2/transport"
 )
 
 // Injectors from wire.go:

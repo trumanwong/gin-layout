@@ -7,7 +7,7 @@ import (
 	"gin-layout/internal/data"
 	"github.com/bwmarrin/snowflake"
 	"github.com/google/wire"
-	"github.com/trumanwong/gin-transport/transport/errors"
+	"github.com/trumanwong/gin-transport/v2/transport/errors"
 	"github.com/trumanwong/go-tools/cache"
 	"github.com/trumanwong/go-tools/log"
 	"github.com/trumanwong/go-tools/robot"

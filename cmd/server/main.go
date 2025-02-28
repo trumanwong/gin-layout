@@ -7,7 +7,7 @@ import (
 	"gin-layout/internal/middlewares"
 	"gin-layout/internal/services"
 	"github.com/gin-gonic/gin"
-	"github.com/trumanwong/gin-transport/transport"
+	"github.com/trumanwong/gin-transport/v2/transport"
 	"github.com/trumanwong/go-tools/log"
 	toolMiddlewares "github.com/trumanwong/go-tools/middlewares"
 )

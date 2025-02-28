@@ -14,7 +14,7 @@ require (
 	github.com/google/wire v0.6.0
 	github.com/redis/go-redis/v9 v9.7.1
 	github.com/spf13/viper v1.19.0
-	github.com/trumanwong/gin-transport v1.0.1
+	github.com/trumanwong/gin-transport/v2 v2.0.1
 	github.com/trumanwong/go-tools v0.0.33
 	google.golang.org/genproto/googleapis/api v0.0.0-20250227231956-55c901821b1e
 	google.golang.org/grpc v1.70.0
